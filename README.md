@@ -41,16 +41,13 @@ Os selos considerados são: **Disponíveis (SeloD)**, **Funcionais (SeloF)**, **
 #### Linux
 O projeto foi desenvolvido e testado em ambiente Linux (Ubuntu 22.04). Siga as instruções normalmente.
 
-```bash
-wsl --install -d Ubuntu-22.04
-```
-
-Dentro do WSL, instale os pacotes necessários:
 
 ```bash
-sudo apt update
-sudo apt install python3 python3-pip python3-venv git build-essential docker.io docker-compose
+cd orsec
+sudo bash install_pkgs
 ```
+
+
 
 ### Ambiente de Execução
 
