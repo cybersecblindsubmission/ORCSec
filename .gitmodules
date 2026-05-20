@@ -1,0 +1,12 @@
+[submodule "oran-sc-ric"]
+	path = oran-sc-ric
+	url = git@github.com:srsran/oran-sc-ric.git
+[submodule "srsRAN_Project"]
+	path = srsRAN_Project
+	url = git@github.com:srsran/srsRAN_Project.git
+[submodule "srsRAN_4G"]
+	path = srsRAN_4G
+	url = git@github.com:srsran/srsRAN_4G.git
+[submodule "ditg"]
+	path = ditg
+	url = git@github.com:jbucar/ditg.git

@@ -1,0 +1,15 @@
+DRB.UEThpDl
+DRB.UEThpUl
+DRB.RlcPacketDropRateDl
+DRB.RlcSduTransmittedVolumeDL
+DRB.RlcSduTransmittedVolumeUL
+CQI
+RSRP
+RSRQ
+RRU.PrbAvailDl
+RRU.PrbAvailUl
+RRU.PrbTotDl
+RRU.PrbTotUl
+RACH.PreambleDedCell
+RRU.PrbUsedDl
+RRU.PrbUsedUl

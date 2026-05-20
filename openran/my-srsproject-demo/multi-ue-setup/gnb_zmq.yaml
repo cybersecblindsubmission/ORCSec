@@ -1,0 +1,105 @@
+# This configuration file example shows how to configure the srsRAN Project gNB to allow srsUE to connect to it. 
+# This specific example uses ZMQ in place of a USRP for the RF-frontend, and creates an FDD cell with 10 MHz bandwidth. 
+# To run the srsRAN Project gNB with this config, use the following command: 
+#   sudo ./gnb -c gnb_zmq.yaml
+
+cu_cp:
+  amf:
+    addr: 10.53.1.2                 # The address or hostname of the AMF.
+    port: 38412
+    bind_addr: 10.53.1.1            # A local IP that the gNB binds to for traffic from the AMF.
+    supported_tracking_areas:
+      - tac: 7
+        plmn_list:
+          - plmn: "00101"
+            tai_slice_support_list:
+              - sst: 1
+  inactivity_timer: 7200            # Sets the UE/PDU Session/DRB inactivity timer to 7200 seconds. Supported: [1 - 7200].
+
+ru_sdr:
+  device_driver: zmq                # The RF driver name.
+  device_args: tx_port=tcp://127.0.0.1:2000,rx_port=tcp://127.0.0.1:2001,base_srate=11.52e6 # Optionally pass arguments to the selected RF driver.
+  srate: 11.52                      # RF sample rate might need to be adjusted according to selected bandwidth.
+  tx_gain: 75                       # Transmit gain of the RF might need to adjusted to the given situation.
+  rx_gain: 75                       # Receive gain of the RF might need to adjusted to the given situation.
+
+cell_cfg:
+  dl_arfcn: 368500                  # ARFCN of the downlink carrier (center frequency).
+  band: 3                           # The NR band.
+  channel_bandwidth_MHz: 10         # Bandwith in MHz. Number of PRBs will be automatically derived.
+  common_scs: 15                    # Subcarrier spacing in kHz used for data.
+  plmn: "00101"                     # PLMN broadcasted by the gNB.
+  tac: 7                            # Tracking area code (needs to match the core configuration).
+  pdcch:
+    common:
+      ss0_index: 0                  # Set search space zero index to match srsUE capabilities
+      coreset0_index: 6             # Set search CORESET Zero index to match srsUE capabilities
+    dedicated:
+      ss2_type: common              # Search Space type, has to be set to common
+      dci_format_0_1_and_1_1: false # Set correct DCI format (fallback)
+  prach:
+    prach_config_index: 1           # Sets PRACH config to match what is expected by srsUE
+  pdsch:
+    mcs_table: qam64                # Sets PDSCH MCS to 64 QAM
+  pusch:
+    mcs_table: qam64                # Sets PUSCH MCS to 64 QAM
+
+log:
+  filename: /tmp/gnb.log            # Path of the log file.
+  all_level: debug                   # Logging level applied to all layers.
+  hex_max_size: 0
+  config_level: debug
+
+pcap:
+  mac_enable: true                 # Set to true to enable MAC-layer PCAPs.
+  mac_filename: /tmp/gnb_mac.pcap   # Path where the MAC PCAP is stored.
+  ngap_enable: true                # Set to true to enable NGAP PCAPs.
+  ngap_filename: /tmp/gnb_ngap.pcap # Path where the NGAP PCAP is stored.
+  e2ap_enable: true                 # Set to true to enable E2AP PCAPs.
+  rlc_enable: true # Set to true to enable RLC PCAPs.
+  rlc_filename: /tmp/gnb_rlc.pcap # Path where the RLC PCAP is stored.
+  e2ap_du_filename: /tmp/gnb_du_e2ap.pcap        # Path where the DU E2AP PCAP is stored.
+  e2ap_cu_cp_filename: /tmp/gnb_cu_cp_e2ap.pcap  # Path where the CU-CP E2AP PCAP is stored.
+  e2ap_cu_up_filename: /tmp/gnb_cu_up_e2ap.pcap  # Path where the CU-UP E2AP PCAP is stored.
+
+e2:
+  enable_du_e2: true                # Enable DU E2 agent (one for each DU instance)
+  enable_cu_cp_e2: true             # Enable CU-CP E2 agent
+  enable_cu_up_e2: true             # Enable CU-UP E2 agent
+  e2sm_kpm_enabled: true            # Enable KPM service module
+  e2sm_rc_enabled: true             # Enable RC service module
+  addr: 127.0.0.1                   # RIC IP address (use localhost since port is exposed)
+  port: 36421                       # RIC port
+
+metrics:
+  # periodicity:
+  # app_usage_report: 1000
+  addr: 127.0.0.1
+  port: 55555
+  enable_json: true
+  enable_log: true
+  enable_verbose: true
+  autostart_stdout_metrics: true
+  layers:
+    enable_app_usage: true
+    enable_e1ap: true
+    enable_pdcp: true
+    enable_cu_up_executor: true
+    enable_sched: true
+    enable_rlc: true
+    enable_mac: true
+    enable_executor: true
+    enable_du_low: true
+    enable_ru: true
+  # rlc_report_period: 1000           # Set remetrics:
+  # addr: 127.0.0.1 # Optional TEXT:IPV4 (127.0.0.1). Sets the metrics address. Supported: IPV4 address.
+  # port: 55555 # Optional UINT. Sets the metrics UPD port. Supported: [0 - 65535].
+  # resource_usage_report: 0              # Optional UINT (0). Sets the resource usage report period in miliseconds. Supported: [0 - inf].
+  # cu_cp_statistics_report_period: 1     # Optional UINT (1). Sets the CU-CP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf].
+  # cu_up_statistics_report_period: 1     # Optional UINT (1). Sets the CU-UP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf].
+  # pdcp_report_period: 0                 # Optional UINT (0). Sets the PDCP metrics report period.
+  # rlc_report_period: 0                  # Optional UINT (0). Sets the RLC metrics report period in milliseconds. Supported [0 - inf]
+  # autostart_stdout_metrics: true       # Optional BOOLEAN (false). Sets whether or note to autostart stdout metrics reporting. Supported [false, true].
+  # sched_report_period: 1000             # Optional UINT (1000). Sets the DU statistics report period in milliseconds. This metric sets the console output period. Supported: [0 - inf].
+  # enable_json_metrics: true            # Optional BOOLEAN (false). Enables JSON metrics reporting. Supported: [false, true].
+  # enable_log_metrics: true            # Optional BOOLEAN (false). Enables log metrics reporting. Supported: [false, true].

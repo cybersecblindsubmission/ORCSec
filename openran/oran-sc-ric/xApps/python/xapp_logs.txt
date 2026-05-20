@@ -1,0 +1,1049 @@
+1753738926773 20/RMR [INFO] ric message routing library on SI95 p=4562 mv=3 flg=00 id=a (f447e29 4.9.4 built: Dec 13 2023)
+INFO: Ensuring metrics directory exists at './metrics'
+INFO: Starting Metrics Collector xApp for E2 Node: gnbd_001_001_00019b_0
+INFO: Requested metrics: ['DRB.UEThpUl', 'DRB.UEThpDl', 'DRB.RlcPacketDropRateDl', 'DRB.PacketSuccessRateUlgNBUu', 'DRB.RlcSduTransmittedVolumeDL', 'DRB.RlcSduTransmittedVolumeUL']
+INFO: Subscribing to gNB metrics (Style 1) (attempt 1/5)
+Successfully subscribed with Subscription ID:  30WMZ5LzRoJmeWfXCrdIP3SIdCW
+SUCCESS: Subscribing to gNB metrics (Style 1) succeeded
+INFO: Style 3 supports only 1 metric - using: DRB.UEThpUl
+INFO: Subscribing to UE metrics (Style 3) (attempt 1/5)
+Successfully subscribed with Subscription ID:  30WMZ6VkmLALrVzAVuo2SaVCjXJ
+SUCCESS: Subscribing to UE metrics (Style 3) succeeded
+SUCCESS: All subscriptions completed successfully
+INFO: xApp is now running and will continue to process any successful subscriptions...
+Received Subscription ID to E2EventInstanceId mapping: 30WMZ5LzRoJmeWfXCrdIP3SIdCW -> 0
+{'response': 'OK', 'status': 200, 'payload': '{}', 'ctype': 'application/json', 'attachment': None, 'mode': 'plain'}
+Received Subscription ID to E2EventInstanceId mapping: 30WMZ6VkmLALrVzAVuo2SaVCjXJ -> 2
+{'response': 'OK', 'status': 200, 'payload': '{}', 'ctype': 'application/json', 'attachment': None, 'mode': 'plain'}
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
+
+✅ Received UE Indication from gnbd_001_001_00019b_0
+   -> UE data for 1 UEs stored in metrics/combined_data.csv
