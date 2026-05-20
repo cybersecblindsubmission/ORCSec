@@ -156,7 +156,7 @@ pip install torch numpy pandas scikit-learn joblib
 ### 1. Clonar o Repositório com Submódulos
 
 ```bash
-git clone --recurse-submodules https://github.com/<seu-usuario>/ORCSec.git
+git clone --recurse-submodules https://github.com/cybersecblindsubmission/ORCSec.git
 cd ORCSec
 ```
 
@@ -175,16 +175,11 @@ sudo bash install_pkg.sh
 ### 3. Gerar Cenários de Experimentação
 
 ```bash
-python3 generate_malicious_template.sh
+python3 generate_experiments.sh
+python3 generate_malicious_experiments.sh
 ```
 
-### 4. Executar geração de tráfego 
-
-```bash
-bash run_enhanced.sh
-```
-
-### 5. Subir o Stack Near-RT RIC
+### 4. Subir o Stack Near-RT RIC
 
 ```bash
 cd openran/oran-sc-ric
@@ -196,6 +191,20 @@ Aguarde até que todos os contêineres estejam saudáveis:
 
 ```bash
 docker compose -f openran/oran-sc-ric/docker-compose.yml ps
+```
+
+### 4. Executar Open5Gs
+
+```bash
+cd openran/srsRAN_Project
+docker compose up --build 5gc
+cd ../..
+```
+
+### 4. Executar geração de tráfego 
+
+```bash
+bash run_enhanced.sh 0 1
 ```
 
 ### 6. Verificar Artefatos dos Modelos ML
