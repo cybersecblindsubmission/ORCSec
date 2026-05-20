@@ -588,3 +588,19 @@ Os projetos e trabalhos que fundamentam a sandbox ORCSec são listados abaixo co
   note    = {Projeto n.º 3043047J}
 }
 ```
+
+**[4] OrSec: Uma Sandbox para Experimentação em Cibersegurança Open RAN**
+
+```bibtex
+@inproceedings{orsec_sbseg2026,
+  author    = {Sobrenome, Nome and Sobrenome, Nome},
+  title     = {{OrSec - Uma Sandbox para testes de Cibersegurança em OpenRAN}},
+  booktitle = {Anais do Simpósio Brasileiro de Segurança da Informação e de Sistemas Computacionais (SBSeg)},
+  year      = {2026},
+  publisher = {SBC},
+  address   = {Porto Alegre, RS, Brasil},
+  pages     = {XXX--YYY},
+  doi       = {10.5753/sbseg.2026.XXXXX},
+  url       = {https://sol.sbc.org.br/index.php/sbseg/article/view/XXXXX}
+}
+```
