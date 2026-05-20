@@ -41,14 +41,6 @@ Os selos considerados são: **Disponíveis (SeloD)**, **Funcionais (SeloF)**, **
 #### Linux
 O projeto foi desenvolvido e testado em ambiente Linux (Ubuntu 22.04). Siga as instruções normalmente.
 
-
-```bash
-cd orsec
-sudo bash install_pkgs
-```
-
-
-
 ### Ambiente de Execução
 
 #### Hardware Recomendado
@@ -174,27 +166,22 @@ Se já clonou sem submódulos:
 git submodule update --init --recursive
 ```
 
-### 2. Criar Ambiente Virtual Python
+### 2. Instalar dependências, srsRAN e srs4G
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate   # Linux/macOS/WSL
+sudo bash install_pkg.sh
 ```
 
-### 3. Instalar Dependências Python
+### 3. Gerar Cenários de Experimentação
 
 ```bash
-pip install --upgrade pip
-pip install torch numpy pandas scikit-learn joblib
+python3 generate_malicious_template.sh
 ```
 
-### 4. Instalar Docker e Docker Compose
+### 4. Executar geração de tráfego 
 
 ```bash
-sudo apt update
-sudo apt install -y docker.io docker-compose
-sudo usermod -aG docker $USER
-newgrp docker
+bash run_enhanced.sh
 ```
 
 ### 5. Subir o Stack Near-RT RIC
@@ -227,36 +214,14 @@ ls openran/oran-sc-ric/xApps/python/*.joblib
 Execute o seguinte comando para verificar se a instalação foi bem-sucedida:
 
 ```bash
-python3 -c "
-import torch, numpy, pandas, sklearn, joblib
-print('[OK] PyTorch:', torch.__version__)
-print('[OK] NumPy:', numpy.__version__)
-print('[OK] Pandas:', pandas.__version__)
-print('[OK] scikit-learn:', sklearn.__version__)
 
-import os
-models = ['openran/oran-sc-ric/xApps/python/s1_model.joblib',
-          'openran/oran-sc-ric/xApps/python/s2_benign_model.joblib',
-          'openran/oran-sc-ric/xApps/python/s2_malicious_model.joblib']
-for m in models:
-    status = '[OK]' if os.path.exists(m) else '[AUSENTE]'
-    print(f'{status} Modelo: {m}')
 
-ric_up = os.system('docker compose -f openran/oran-sc-ric/docker-compose.yml ps --quiet 2>/dev/null | wc -l') == 0
-print('[OK] Verificação de dependências concluída.')
-"
 ```
 
 **Saída esperada:**
 ```
-[OK] PyTorch: 2.x.x
-[OK] NumPy: 1.x.x
-[OK] Pandas: 2.x.x
-[OK] scikit-learn: 1.x.x
-[OK] Modelo: openran/oran-sc-ric/xApps/python/s1_model.joblib
-[OK] Modelo: openran/oran-sc-ric/xApps/python/s2_benign_model.joblib
-[OK] Modelo: openran/oran-sc-ric/xApps/python/s2_malicious_model.joblib
-[OK] Verificação de dependências concluída.
+
+
 ```
 
 **Tempo esperado:** < 10 segundos
