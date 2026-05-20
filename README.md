@@ -63,29 +63,29 @@ O projeto foi desenvolvido e testado em ambiente Linux (Ubuntu 22.04). Siga as i
 
 ```
 ORCSec/
-├── detector_xapp.py               # xApp detector de UE malicioso (inferência cascateada)
-├── kpm5_xapp.py                   # xApp coletor de métricas KPM Style 5
-├── generate_experiments.py        # Gerador de experimentos benignos
+├── detector_xapp.py                   # xApp detector de UE malicioso (inferência cascateada)
+├── kpm5_xapp.py                       # xApp coletor de métricas KPM Style 5
+├── generate_experiments.py            # Gerador de experimentos benignos
 ├── generate_malicious_experiments.py  # Gerador de experimentos com tráfego malicioso
-├── mmap_generator.py              # Gerador estocástico M-map para atribuição de perfis
-├── metrics_server.py              # Servidor de métricas auxiliar
-├── gnb_zmq.yaml                   # Configuração do gNB srsRAN com ZMQ
-├── multi_ue_scenario.grc          # Cenário GNU Radio para simulação de canal RF
+├── mmap_generator.py                  # Gerador estocástico M-map para atribuição de perfis
+├── metrics_server.py                  # Servidor de métricas auxiliar
+├── gnb_zmq.yaml                       # Configuração do gNB srsRAN com ZMQ
+├── multi_ue_scenario.grc              # Cenário GNU Radio para simulação de canal RF
 ├── dataset/
-│   └── ue_data.csv                # Dados de configuração por UE
+│   └── ue_data.csv                    # Dados de configuração por UE
 ├── openran/
-│   ├── my-srsproject-demo/        # Configurações e scripts do srsRAN
-│   │   ├── config/                # Configurações gNB e UE (ZMQ)
-│   │   └── multi-ue-setup/        # Cenários GNU Radio multi-UE
-│   ├── oran-sc-ric/               # Stack Near-RT RIC (O-RAN SC)
-│   │   ├── docker-compose.yml     # Orquestração dos componentes RIC
-│   │   ├── ric/configs/           # Configurações dos serviços RIC
-│   │   └── xApps/python/          # xApps Python e bibliotecas
-│   │       ├── lib/               # Módulos E2SM-KPM, ML, xAppBase
-│   │       └── *.joblib           # Artefatos dos modelos ML treinados
-│   ├── srsRAN_4G/                 # Fonte srsRAN 4G (submódulo)
-│   └── srsRAN_Project/            # Fonte srsRAN Project 5G (submódulo)
-└── README.md                      # Este arquivo
+│   ├── my-srsproject-demo/            # Configurações e scripts do srsRAN
+│   │   ├── config/                    # Configurações gNB e UE (ZMQ)
+│   │   └── multi-ue-setup/            # Cenários GNU Radio multi-UE
+│   ├── oran-sc-ric/                   # Stack Near-RT RIC (O-RAN SC)
+│   │   ├── docker-compose.yml         # Orquestração dos componentes RIC
+│   │   ├── ric/configs/               # Configurações dos serviços RIC
+│   │   └── xApps/python/              # xApps Python e bibliotecas
+│   │       ├── lib/                   # Módulos E2SM-KPM, ML, xAppBase
+│   │       └── *.joblib               # Artefatos dos modelos ML treinados
+│   ├── srsRAN_4G/                     # Fonte srsRAN 4G (submódulo)
+│   └── srsRAN_Project/                # Fonte srsRAN Project 5G (submódulo)
+└── README.md                          # Este arquivo
 ```
 
 ### Descrição dos Componentes Principais
@@ -334,7 +334,7 @@ bash run_enhanced.sh 0 1   # conjunto de treino 0, experimento 1
 ```
 
 **Fases executadas automaticamente:**
-1. Inicia Near-RT RIC (Docker Compose) → aguarda saúde de `ric_submgr`
+1. Inicia Near-RT RIC (Docker Compose) → aguarda healthcheck de `ric_submgr`
 2. Inicia core Open5GS → aguarda healthcheck do contêiner
 3. Inicia gNB srsRAN com logging de métricas e pcap
 4. Cria namespaces de rede e inicia 3 instâncias srsUE (configs de `ue_data.csv`)
