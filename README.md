@@ -196,7 +196,7 @@ docker compose -f openran/oran-sc-ric/docker-compose.yml ps
 ### 4. Executar Open5Gs
 
 ```bash
-cd openran/srsRAN_Project
+cd openran/srsRAN_Project/docker
 docker compose up --build 5gc
 cd ../..
 ```
@@ -309,12 +309,74 @@ docker compose exec python_xapp_runner bash -c \
 
 ### Experimento 3: Geração de Dataset de Experimentos
 
+#### Estado inicial do diretório `dataset/`
+
+Antes de executar qualquer script de geração, o diretório `dataset/` contém apenas o arquivo de configuração dos UEs:
+
+```
+dataset/
+└── ue_data.csv          # Credenciais de cada UE (nome, IMSI, chave, IMEI)
+```
+
+O arquivo `ue_data.csv` define os três UEs usados pelo orquestrador:
+
+```
+# name, imsi,              key,                              imei
+ue1,    001010123456780,   00112233445566778899aabbccddeeff, 353490069873319
+ue2,    001010123456789,   00112233445566778899aabbccddef00, 353490069873318
+ue3,    001010123456790,   00112233445566778899aabbccddef01, 353490069873312
+```
+
+---
+
 #### 3.1 Experimentos Benignos
 
 ```bash
 python3 generate_experiments.py
 # Gera 50 execuções em dataset/generated_experiments/trX/expY/
 ```
+
+O script atribui aleatoriamente, via gerador estocástico M-map, um perfil de tráfego benigno (eMBB, MTC, URLLC, VoIP) a cada um dos 3 UEs em cada execução.
+
+**Estado do diretório `dataset/` após `generate_experiments.py`:**
+
+```
+dataset/
+├── ue_data.csv
+└── generated_experiments/          # 50 execuções benignas
+    ├── tr0/
+    │   └── exp1/
+    │       ├── conditions.csv      # UE ↔ perfil benigno + parâmetros M-map e canal
+    │       └── run_scenario.sh     # Lança cenário GNU Radio para este experimento
+    ├── tr1/
+    │   └── exp1/
+    │       ├── conditions.csv
+    │       └── run_scenario.sh
+    │   ...
+    └── tr49/
+        └── exp1/
+            ├── conditions.csv
+            └── run_scenario.sh
+```
+
+Exemplo de `conditions.csv` benigno (`tr3/exp1/`):
+```
+UE,Profile
+UE1,/path/to/traffic_profiles/voip.sh
+UE2,/path/to/traffic_profiles/embb.sh
+UE3,/path/to/traffic_profiles/urllc.sh
+
+# M-map Parameters
+seed,0.7341
+p,0.3812
+
+# Channel Parameters
+delay_spread,3.2
+doppler_freq,12.5
+...
+```
+
+---
 
 #### 3.2 Experimentos com Tráfego Malicioso
 
@@ -323,13 +385,91 @@ python3 generate_malicious_experiments.py
 # Gera 100 execuções com 2 UEs maliciosos por execução
 ```
 
-Cada pasta de experimento gerada contém:
+O script seleciona **2 dos 3 UEs** para receber perfis de ataque (escolhidos via M-map) e o UE restante recebe um perfil benigno. O diretório de saída é mantido separado de `generated_experiments/` para facilitar a divisão treino/teste.
+
+> **Atenção:** o script apaga e recria `dataset/generated_malicious_experiments/` a cada execução (`shutil.rmtree`). Os dados benignos em `generated_experiments/` não são afetados.
+
+**Estado do diretório `dataset/` após `generate_malicious_experiments.py`:**
+
 ```
-conditions.csv       # Mapeamento UE ↔ perfil iperf + parâmetros M-map e canal
-run_scenario.sh      # Inicia cenário GNU Radio e salva PID em /tmp/python_scenario.pid
-metrics/             # Métricas de saída (se xApp coletor utilizado)
-ue_logs/             # Logs por UE, CSV de métricas, pcap, rastreamento
-gnb_logs/            # Logs do gNB, rastreamentos pcap
+dataset/
+├── ue_data.csv
+├── generated_experiments/               # 50 execuções benignas (inalterado)
+│   └── tr0/ ... tr49/
+└── generated_malicious_experiments/     # 100 execuções com UEs maliciosos
+    ├── tr0/
+    │   └── exp1/
+    │       ├── conditions.csv           # 2 UEs com perfil de ataque, 1 benigno
+    │       └── run_scenario.sh
+    ├── tr1/
+    │   └── exp1/
+    │       ├── conditions.csv
+    │       └── run_scenario.sh
+    │   ...
+    └── tr99/
+        └── exp1/
+            ├── conditions.csv
+            └── run_scenario.sh
+```
+
+Exemplo de `conditions.csv` malicioso (`tr7/exp1/`):
+```
+UE,Profile
+UE1,/path/to/traffic_profiles/embb.sh
+UE2,/path/to/traffic_profiles/malicious/udp_flood.sh
+UE3,/path/to/traffic_profiles/malicious/pulsing_udp_flood.sh
+
+# M-map Parameters
+seed,0.2954
+p,0.4107
+
+# Channel Parameters
+delay_spread,5.1
+doppler_freq,8.3
+...
+```
+
+Perfis de ataque disponíveis (subdiretório `traffic_profiles/malicious/`):
+
+| Perfil | Tipo de Ataque |
+|--------|---------------|
+| `udp_flood.sh` | Inundação UDP contínua |
+| `parallel_udp_flood.sh` | Inundação UDP paralela multi-fluxo |
+| `pulsing_udp_flood.sh` | Inundação UDP em rajadas pulsantes |
+| `udp_fragmentation_flood.sh` | Inundação com fragmentação de pacotes UDP |
+| `small_packet_flood.sh` | Inundação com pacotes de tamanho mínimo |
+| `parallel_tcp_flood.sh` | Inundação TCP paralela multi-fluxo |
+
+---
+
+#### Estado final consolidado do diretório `dataset/`
+
+Após executar ambos os scripts, o diretório completo é:
+
+```
+dataset/
+├── ue_data.csv                          # Credenciais dos UEs
+├── generated_experiments/               # 50 execuções — todos os UEs benignos
+│   └── tr0/ ... tr49/
+│       └── exp1/
+│           ├── conditions.csv
+│           └── run_scenario.sh
+└── generated_malicious_experiments/     # 100 execuções — 2 UEs maliciosos por run
+    └── tr0/ ... tr99/
+        └── exp1/
+            ├── conditions.csv
+            └── run_scenario.sh
+```
+
+Os diretórios `metrics/`, `ue_logs/` e `gnb_logs/` são criados **pelo orquestrador** (`run_enhanced.sh`) durante a execução real de cada experimento:
+
+```
+dataset/generated_malicious_experiments/tr0/exp1/
+├── conditions.csv
+├── run_scenario.sh
+├── metrics/         # Preenchido pelo xApp coletor (kpm_style5_metrics.csv)
+├── ue_logs/         # Logs por UE: métricas CSV, pcap, rastreamento RRC/NAS
+└── gnb_logs/        # Logs do gNB: pcap NGAP/MAC, rastreamentos de protocolo
 ```
 
 ---
