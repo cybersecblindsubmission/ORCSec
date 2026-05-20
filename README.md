@@ -38,14 +38,11 @@ Os selos considerados são: **Disponíveis (SeloD)**, **Funcionais (SeloF)**, **
 
 ### ⚠️ Sistemas Operacionais Suportados
 
-#### Linux (Recomendado)
-O projeto foi desenvolvido e testado em ambiente Linux (Ubuntu 20.04+). Siga as instruções normalmente.
-
-#### Windows
-Para executar no Windows, é **NECESSÁRIO** usar o WSL2 (Windows Subsystem for Linux):
+#### Linux
+O projeto foi desenvolvido e testado em ambiente Linux (Ubuntu 22.04). Siga as instruções normalmente.
 
 ```bash
-wsl --install -d Ubuntu-24.04
+wsl --install -d Ubuntu-22.04
 ```
 
 Dentro do WSL, instale os pacotes necessários:
@@ -66,7 +63,7 @@ sudo apt install python3 python3-pip python3-venv git build-essential docker.io 
 | GPU | — (não necessária) | Opcional (aceleração de modelos PyTorch) |
 
 #### Software Necessário
-- **Sistema Operacional:** Linux Ubuntu 20.04+ ou Windows com WSL2
+- **Sistema Operacional:** Linux Ubuntu 22.04 
 - **Python:** 3.8 ou superior
 - **Docker:** 20.10+ com Docker Compose
 - **Git:** Para clonar o repositório e submódulos
