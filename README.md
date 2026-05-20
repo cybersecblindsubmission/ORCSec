@@ -1,12 +1,12 @@
-# ORCSec: Detecção de UE Malicioso em Redes O-RAN com xApps e Classificação Cascateada por ML
+# ORCSec: O-RAN Cybersecurity Sandbox
 
-Este artefato apresenta a implementação do framework **ORCSec**, uma abordagem para detecção de comportamento malicioso de Equipamentos de Usuário (UEs) em redes O-RAN. O sistema integra coleta de métricas E2SM-KPM Style 5, engenharia de características temporais e inferência cascateada multi-estágio dentro de um Near-RT RIC, utilizando xApps Python para monitoramento e classificação em tempo real.
+O **ORCSec** é uma sandbox de cibersegurança para redes O-RAN que permite reproduzir, de forma controlada e repetível, cenários de ataque e defesa em uma infraestrutura de rádio acesso aberta. A sandbox integra um testbed 4G/5G completo — baseado no srsRAN e no srsRAN 4G [[1]](#referências) [[2]](#referências) — com um Near-RT RIC (O-RAN SC), orquestração automatizada de experimentos, geração de tráfego sintético (benigno e malicioso) e detecção de comportamento malicioso de Equipamentos de Usuário (UEs) via xApps Python com modelos de Machine Learning cascateados.
 
-**Título do Trabalho:** ORCSec — Framework de Orquestração de Experimentos e Detecção de UE Malicioso Baseada em ML sobre Métricas O-RAN KPM Style 5
+A abordagem de detecção implementada na sandbox tem como referência o trabalho de Ayush Jaipuriyar [[3]](#referências), que propõe o uso de ML dentro de um xApp no Near-RT RIC para identificar UEs maliciosos a partir de métricas E2SM-KPM Style 5, classificando tanto o comportamento binário (benigno/malicioso) quanto o subtipo de ataque (UDP flood, TCP flood, fragmentação, pulsante, etc.) ou de tráfego legítimo (eMBB, MTC, URLLC, VoIP).
 
-**Contexto Acadêmico:** Dissertação de Mestrado — Análise de Telemetria RAN Online para Detecção de Comportamento Malicioso de UEs com Classificação Multi-estágio e Extração de Features Temporais em Testbed O-RAN Near-RT RIC
+**Contexto:** Pesquisa em segurança de redes O-RAN — detecção online de UEs maliciosos com classificação multi-estágio e extração de features temporais em testbed Near-RT RIC
 
-**Resumo:** Este trabalho propõe o ORCSec, um framework ponta a ponta para geração de experimentos multi-UE 4G/5G (tráfego benigno e de ataque), coleta de métricas padronizadas O-RAN via KPM Style 5, engenharia de características temporais e classificação cascateada (Estágio 1 binário + Estágio 2 subtipo) de UEs maliciosos dentro de um Near-RT RIC. O detector opera sobre buffers de métricas em memória, sem escrita de CSVs intermediários, garantindo inferência online de baixa latência. O sistema suporta perfis de ataque como UDP flood, TCP flood, fragmentação e variantes pulsantes, além de subtipagem de tráfego benigno (eMBB, MTC, URLLC, VoIP).
+**Resumo:** O ORCSec oferece um ambiente sandbox ponta a ponta para pesquisa em cibersegurança de redes abertas de rádio acesso (O-RAN). A partir de um testbed srsRAN + Open5GS orquestrado por scripts automatizados, a sandbox gera datasets realistas de tráfego multi-UE com injeção controlada de ataques, coleta métricas padronizadas via KPM Style 5 e executa inferência cascateada (Estágio 1 binário → Estágio 2 subtipo) em tempo real dentro de um Near-RT RIC, sem necessidade de CSVs intermediários. O ambiente é projetado para ser reprodutível, extensível e seguro — operando inteiramente em namespaces de rede isolados.
 
 ---
 
@@ -14,7 +14,7 @@ Este artefato apresenta a implementação do framework **ORCSec**, uma abordagem
 
 Este documento está organizado nas seguintes seções:
 
-- [Título e Resumo](#orcsec-detecção-de-ue-malicioso-em-redes-o-ran-com-xapps-e-classificação-cascateada-por-ml): Descrição geral do projeto e contexto acadêmico
+- [Título e Resumo](#orcsec-o-ran-cybersecurity-sandbox): Descrição geral do projeto e contexto acadêmico
 - [Estrutura do readme.md](#estrutura-do-readmemd): Esta seção (organização do documento)
 - [Selos Considerados](#selos-considerados): Selos de qualidade aplicáveis ao artefato
 - [Informações básicas](#informações-básicas): Requisitos de hardware e software
@@ -24,6 +24,7 @@ Este documento está organizado nas seguintes seções:
 - [Teste mínimo](#teste-mínimo): Verificação básica de funcionamento
 - [Experimentos](#experimentos): Reprodução dos resultados do artigo
 - [LICENSE](#license): Licença do projeto
+- [Referências](#referências): Citações BibTeX dos projetos base
 
 ---
 
@@ -425,3 +426,57 @@ THE SOFTWARE.
 ```
 
 Consulte os arquivos `openran/srsRAN_4G/LICENSE`, `openran/srsRAN_Project/LICENSE` e `openran/oran-sc-ric/LICENSE` para os termos completos dos componentes de código aberto incluídos como submódulos.
+
+---
+
+## Referências
+
+Os projetos e trabalhos que fundamentam a sandbox ORCSec são listados abaixo com suas respectivas entradas BibTeX.
+
+**[1] srsRAN 4G (anteriormente srsLTE)**
+
+```bibtex
+@inproceedings{gomez2016srslte,
+  author    = {Gomez-Miguelez, Ismael and
+               Garcia-Saavedra, Andres and
+               Sutton, Paul D. and
+               Serrano, Pablo and
+               Cano, Cristina and
+               Leith, Douglas J.},
+  title     = {{srsLTE}: An Open-Source Platform for {LTE} Evolution Research},
+  booktitle = {Proceedings of the 10th International Workshop on Wireless Network
+               Testbeds, Experimental Evaluation, and Characterization (WiNTECH)},
+  pages     = {25--32},
+  year      = {2016},
+  publisher = {ACM},
+  address   = {New York, NY, USA},
+  doi       = {10.1145/2980159.2980163},
+  url       = {https://github.com/srsran/srsRAN_4G}
+}
+```
+
+**[2] srsRAN Project (5G NR)**
+
+```bibtex
+@misc{srsranproject2024,
+  author       = {{Software Radio Systems (SRS)}},
+  title        = {{srsRAN Project}: Open-Source {5G NR} Software Radio},
+  year         = {2024},
+  howpublished = {\url{https://github.com/srsran/srsRAN_Project}},
+  note         = {Acesso em: 2025}
+}
+```
+
+**[3] Detecção de UE Malicioso via xApp no Near-RT RIC (Jaipuriyar)**
+
+```bibtex
+@mastersthesis{jaipuriyar2024mloran,
+  author  = {Jaipuriyar, Ayush},
+  title   = {Machine Learning-Based Malicious User Detection in Open Radio
+             Access Networks: An {xApp} Approach for {Near-RT RIC}},
+  school  = {University of Glasgow},
+  year    = {2024},
+  type    = {MSc Dissertation},
+  note    = {Projeto n.º 3043047J}
+}
+```
