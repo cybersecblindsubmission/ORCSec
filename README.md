@@ -106,16 +106,6 @@ ORCSec/
 
 ## Dependências
 
-### Bibliotecas Python Principais
-
-```
-torch>=1.10.0
-numpy>=1.21.0
-pandas>=1.3.0
-scikit-learn>=0.24.0
-joblib>=1.1.0
-```
-
 ### Dependências de Sistema
 
 | Dependência | Versão Mínima | Finalidade |
@@ -126,14 +116,6 @@ joblib>=1.1.0
 | tmux | 3.0+ | Gerenciamento de sessões paralelas |
 | iperf3 | 3.9+ | Geração de tráfego por perfil |
 | Python | 3.8+ | xApps e scripts de orquestração |
-
-### Instalação das Dependências Python
-
-```bash
-pip install torch numpy pandas scikit-learn joblib
-```
-
----
 
 ## Preocupações com segurança
 
@@ -179,7 +161,7 @@ python3 generate_experiments.sh
 python3 generate_malicious_experiments.sh
 ```
 
-### 4. Subir o Stack Near-RT RIC
+### 4. Buildar e executar o container nr-RT-RIC
 
 ```bash
 cd openran/oran-sc-ric
@@ -193,7 +175,7 @@ Aguarde até que todos os contêineres estejam saudáveis:
 docker compose -f openran/oran-sc-ric/docker-compose.yml ps
 ```
 
-### 4. Executar Open5Gs
+### 4. Buildar e executar o container Open5Gs
 
 ```bash
 cd openran/srsRAN_Project/docker
@@ -223,8 +205,7 @@ ls openran/oran-sc-ric/xApps/python/*.joblib
 Execute o seguinte comando para verificar se a instalação foi bem-sucedida:
 
 ```bash
-
-
+bash run_enhanced.sh 0 1
 ```
 
 **Saída esperada:**
