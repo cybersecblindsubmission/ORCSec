@@ -1,238 +1,427 @@
-# O-RAN xApps, Experiment Orchestration & ML-based Malicious UE Detection
+# ORCSec: Detecção de UE Malicioso em Redes O-RAN com xApps e Classificação Cascateada por ML
 
-> End-to-end framework for generating realistic multi-UE 4G/5G RAN experiments (benign + attack traffic), collecting standardized O-RAN KPM Style 5 metrics, engineering temporal features, and performing cascaded multi-stage malicious UE classification inside a Near-RT RIC python xApp.
+Este artefato apresenta a implementação do framework **ORCSec**, uma abordagem para detecção de comportamento malicioso de Equipamentos de Usuário (UEs) em redes O-RAN. O sistema integra coleta de métricas E2SM-KPM Style 5, engenharia de características temporais e inferência cascateada multi-estágio dentro de um Near-RT RIC, utilizando xApps Python para monitoramento e classificação em tempo real.
 
----
-## 1. High-Level Overview
-This repository contains:
-- **O-RAN Near-RT RIC xApps** for:
-  - Collecting E2SM-KPM Report Service *Style 5* metrics (`kpm5_xapp.py`).
-  - Performing *in-memory feature engineering* + *cascaded ML inference* to detect and classify malicious UE behavior (`detector_xapp.py`).
-- **Experiment generation tooling** (`generate_experiments.py`, `generate_malicious_experiments.py`) producing structured per-run folders with traffic profiles & radio channel parameters.
-- **Full automation script** (`run_enhanced.sh`) that orchestrates: RIC stack, core (Open5GS), srsRAN gNB + UEs, GNU Radio fading/channel scenario, traffic generation (iperf profiles), metric capture, retries, health checks, and cleanup.
-- **Custom temporal feature pipeline** embedded directly in the detector xApp (rolling aggregations, derived ratios, jitter & imbalance metrics, flags, etc.).
-- **ML model integration** (Stage 1 binary + Stage 2 multi-class benign/malicious subtype refinement) using joblib-loaded PyTorch / sklearn-compatible models.
+**Título do Trabalho:** ORCSec — Framework de Orquestração de Experimentos e Detecção de UE Malicioso Baseada em ML sobre Métricas O-RAN KPM Style 5
 
-The system enables *repeatable dataset creation* and *online inference* without writing intermediate CSVs for the detector (buffer-based streaming processing).
+**Contexto Acadêmico:** Dissertação de Mestrado — Análise de Telemetria RAN Online para Detecção de Comportamento Malicioso de UEs com Classificação Multi-estágio e Extração de Features Temporais em Testbed O-RAN Near-RT RIC
+
+**Resumo:** Este trabalho propõe o ORCSec, um framework ponta a ponta para geração de experimentos multi-UE 4G/5G (tráfego benigno e de ataque), coleta de métricas padronizadas O-RAN via KPM Style 5, engenharia de características temporais e classificação cascateada (Estágio 1 binário + Estágio 2 subtipo) de UEs maliciosos dentro de um Near-RT RIC. O detector opera sobre buffers de métricas em memória, sem escrita de CSVs intermediários, garantindo inferência online de baixa latência. O sistema suporta perfis de ataque como UDP flood, TCP flood, fragmentação e variantes pulsantes, além de subtipagem de tráfego benigno (eMBB, MTC, URLLC, VoIP).
 
 ---
-## 2. Architecture
+
+## Estrutura do readme.md
+
+Este documento está organizado nas seguintes seções:
+
+- [Título e Resumo](#orcsec-detecção-de-ue-malicioso-em-redes-o-ran-com-xapps-e-classificação-cascateada-por-ml): Descrição geral do projeto e contexto acadêmico
+- [Estrutura do readme.md](#estrutura-do-readmemd): Esta seção (organização do documento)
+- [Selos Considerados](#selos-considerados): Selos de qualidade aplicáveis ao artefato
+- [Informações básicas](#informações-básicas): Requisitos de hardware e software
+- [Dependências](#dependências): Bibliotecas e versões necessárias
+- [Preocupações com segurança](#preocupações-com-segurança): Considerações de segurança
+- [Instalação](#instalação): Processo de instalação do ambiente
+- [Teste mínimo](#teste-mínimo): Verificação básica de funcionamento
+- [Experimentos](#experimentos): Reprodução dos resultados do artigo
+- [LICENSE](#license): Licença do projeto
+
+---
+
+## Selos Considerados
+
+Os selos considerados são: **Disponíveis (SeloD)**, **Funcionais (SeloF)**, **Sustentáveis (SeloS)** e **Experimentos Reprodutíveis (SeloR)**.
+
+---
+
+## Informações básicas
+
+### ⚠️ Sistemas Operacionais Suportados
+
+#### Linux (Recomendado)
+O projeto foi desenvolvido e testado em ambiente Linux (Ubuntu 20.04+). Siga as instruções normalmente.
+
+#### Windows
+Para executar no Windows, é **NECESSÁRIO** usar o WSL2 (Windows Subsystem for Linux):
+
+```bash
+wsl --install -d Ubuntu-24.04
 ```
-+----------------------+        +---------------------+       +------------------+
-|  Traffic Profiles &  |        |  Experiment Folders |       |  run_enhanced.sh |
-|  (iperf scripts)     |  --->  |  trX/expY:           |  -->  |  Orchestrator    |
-|  normal/malicious    |        |   - conditions.csv   |       |  (RIC+Core+RAN)  |
-+----------+-----------+        |   - run_scenario.sh  |       +---------+--------+
-           |                     |   - metrics/         |                 |
-           |                     +----------+-----------+                 |
-           v                                |                             v
-   generate_experiments.py /                |                   Near-RT RIC (docker)
-   generate_malicious_experiments.py        |                   - submgr / e2term / appmgr
-                                            v                   - python_xapp_runner
-                                  GNU Radio Channel Model               |
-                                            |                           |
-                                     srsRAN gNB (tmux) <---- E2 ----> KPM xApp
-                                            |                                 \
-                                      UE netns (srsUE x N)                     \
-                                            |                                   \
-                                   iperf traffic (benign/malicious)             \
-                                            |                                    \
-                                            +--------> Detector xApp (buffer -> engineered features -> cascade models)
-``` 
 
-Key flows:
-- E2SM-KPM Style 5 subscription delivers per-UE metrics → CSV (collector xApp) or in-memory buffer (detector).
-- Detector xApp transforms raw metrics into temporal + structural features → cascaded model → per-UE decision.
-- Experiment orchestration ensures reproducibility and resilience with retries & health checks.
+Dentro do WSL, instale os pacotes necessários:
 
----
-## 3. Core Components
-| Component | File(s) | Purpose |
-|-----------|---------|---------|
-| KPM Metrics Collector xApp | `kpm5_xapp.py` | Subscribes to Style 5, writes wide CSV (one row per UE per indication) |
-| Malicious Detector xApp | `detector_xapp.py` | Buffers metrics, engineers features, cascaded prediction (Stage 1 binary → Stage 2 subtype) |
-| xApp Base Abstraction | `openran/oran-sc-ric/xApps/python/lib/xAppBase.py` | Wraps RMR init, HTTP subscription callbacks, threading, subscription dispatch |
-| E2SM-KPM Handling | `openran/oran-sc-ric/xApps/python/lib/e2sm_kpm_module.py` (not expanded here) | Packs/unpacks KPM indications and subscription payloads |
-| Experiment Generator (benign) | `generate_experiments.py` | Creates structured experiment folders with M-map stochastic assignment |
-| Experiment Generator (malicious) | `generate_malicious_experiments.py` | Same as above but injects malicious traffic profiles (2 malicious UEs / run) |
-| Orchestrator Script | `run_enhanced.sh` | Starts/stops entire stack, health checks, retries, validates outputs |
-| Models | `openran/oran-sc-ric/xApps/python/lib/ml_models.py` & external `.joblib` artifacts | Defines neural architectures used during training/inference |
-| GNU Radio Scenario | `multi_ue_scenario.grc` / generated runner scripts | Provides RF/channel impairment dynamics |
-
----
-## 4. Experiment Folder Layout
-Each generated experiment (e.g. `generated_malicious_experiments/tr12/exp1/`) contains:
+```bash
+sudo apt update
+sudo apt install python3 python3-pip python3-venv git build-essential docker.io docker-compose
 ```
-conditions.csv        # UE ↔ iperf profile mapping + M-map & channel params
-run_scenario.sh       # Launches GNU Radio scenario & writes PID to /tmp/python_scenario.pid
-metrics/              # Output metrics (if collector xApp used)
-ue_logs/              # Per UE stdout, metrics CSV, pcap, tracing
-gnb_logs/             # gNB logs, pcap traces
+
+### Ambiente de Execução
+
+#### Hardware Recomendado
+| Recurso | Mínimo | Recomendado |
+|---------|--------|-------------|
+| CPU | 4 cores | 8+ cores |
+| RAM | 16 GB | 32 GB |
+| Disco | 20 GB livres | 50 GB livres |
+| GPU | — (não necessária) | Opcional (aceleração de modelos PyTorch) |
+
+#### Software Necessário
+- **Sistema Operacional:** Linux Ubuntu 20.04+ ou Windows com WSL2
+- **Python:** 3.8 ou superior
+- **Docker:** 20.10+ com Docker Compose
+- **Git:** Para clonar o repositório e submódulos
+- **GNU Radio:** Para simulação de canal RF (cenários de fading multi-UE)
+- **tmux:** Para gerenciamento de sessões de processos paralelos
+
+### Estrutura do Repositório
+
 ```
-The orchestrator later augments these directories with runtime artifacts.
-
----
-## 5. KPM Metrics & Feature Engineering
-Raw subscribed metrics (default list):
+ORCSec/
+├── detector_xapp.py               # xApp detector de UE malicioso (inferência cascateada)
+├── kpm5_xapp.py                   # xApp coletor de métricas KPM Style 5
+├── generate_experiments.py        # Gerador de experimentos benignos
+├── generate_malicious_experiments.py  # Gerador de experimentos com tráfego malicioso
+├── mmap_generator.py              # Gerador estocástico M-map para atribuição de perfis
+├── metrics_server.py              # Servidor de métricas auxiliar
+├── gnb_zmq.yaml                   # Configuração do gNB srsRAN com ZMQ
+├── multi_ue_scenario.grc          # Cenário GNU Radio para simulação de canal RF
+├── dataset/
+│   └── ue_data.csv                # Dados de configuração por UE
+├── openran/
+│   ├── my-srsproject-demo/        # Configurações e scripts do srsRAN
+│   │   ├── config/                # Configurações gNB e UE (ZMQ)
+│   │   └── multi-ue-setup/        # Cenários GNU Radio multi-UE
+│   ├── oran-sc-ric/               # Stack Near-RT RIC (O-RAN SC)
+│   │   ├── docker-compose.yml     # Orquestração dos componentes RIC
+│   │   ├── ric/configs/           # Configurações dos serviços RIC
+│   │   └── xApps/python/          # xApps Python e bibliotecas
+│   │       ├── lib/               # Módulos E2SM-KPM, ML, xAppBase
+│   │       └── *.joblib           # Artefatos dos modelos ML treinados
+│   ├── srsRAN_4G/                 # Fonte srsRAN 4G (submódulo)
+│   └── srsRAN_Project/            # Fonte srsRAN Project 5G (submódulo)
+└── README.md                      # Este arquivo
 ```
-RRU.PrbAvailDl, RRU.PrbAvailUl, RRU.PrbUsedDl, RRU.PrbUsedUl,
-RACH.PreambleDedCell, DRB.UEThpDl, DRB.UEThpUl,
-DRB.RlcPacketDropRateDl, DRB.RlcSduTransmittedVolumeDL, DRB.RlcSduTransmittedVolumeUL,
-CQI, RSRP, RSRQ, DRB.RlcSduDelayDl, DRB.RlcDelayUl
+
+### Descrição dos Componentes Principais
+
+| Componente | Arquivo(s) | Descrição |
+|------------|-----------|-----------|
+| xApp Detector | `detector_xapp.py` | Subscreve KPM Style 5, engenharia de features, predição cascateada (Estágio 1 binário → Estágio 2 subtipo) |
+| xApp Coletor KPM | `kpm5_xapp.py` | Subscreve KPM Style 5, grava CSV largo (uma linha por UE por indicação) |
+| Base xApp | `openran/oran-sc-ric/xApps/python/lib/xAppBase.py` | Abstração de RMR, callbacks HTTP, threading e despacho de subscrições |
+| Módulo E2SM-KPM | `openran/oran-sc-ric/xApps/python/lib/e2sm_kpm_module.py` | Empacotamento/desempacotamento de indicações e payloads de subscrição KPM |
+| Modelos ML | `openran/oran-sc-ric/xApps/python/lib/ml_models.py` | Arquiteturas CNN-GRU e CNN-LSTM usadas em treinamento/inferência |
+| Gerador Benigno | `generate_experiments.py` | Cria pastas de experimentos com atribuição estocástica M-map de perfis benignos |
+| Gerador Malicioso | `generate_malicious_experiments.py` | Mesmo fluxo, porém injeta 2 UEs maliciosos por execução |
+| Orquestrador | `run_enhanced.sh` | Inicia/para toda a pilha (RIC, core, gNB, UEs, GNU Radio, tráfego), com retentativas e validações |
+| Cenário GNU Radio | `multi_ue_scenario.grc` / scripts gerados | Fornece dinâmica de canal RF e degradação de sinal |
+
+---
+
+## Dependências
+
+### Bibliotecas Python Principais
+
 ```
-Derived (detector) features include (non-exhaustive):
-- PRB utilization & efficiency ratios (DL/UL)
-- Throughput/volume normalization
-- Resource & delay imbalance metrics
-- Signal composite index (CQI+RSRP+RSRQ)/3
-- Jitter (rolling diff) of RLC delays
-- Zero-activity & poor-signal flags
-- Rolling window (size=5) mean/std for selected base + derived signals
-- Epoch timestamp alignment
+torch>=1.10.0
+numpy>=1.21.0
+pandas>=1.3.0
+scikit-learn>=0.24.0
+joblib>=1.1.0
+```
 
-The detector reindexes engineered frame to the feature signature expected by loaded models (`self.selected_features`).
+### Dependências de Sistema
 
----
-## 6. Cascaded Malicious UE Detection
-1. **Stage 1 (Binary)**: Malicious vs Benign (majority vote aggregated per UE across buffered rows).
-2. **Stage 2 (Subtype)**: Two specialist models:
-   - Benign subtype classifier (embb, mtc, urllc, voip)
-   - Malicious subtype classifier (udp_flood, fragmentation, pulsing variants, small packet, parallel floods, etc.)
-3. **Cascade Output**: Per row and aggregated per UE (e.g., `UE 2 → Malicious-udp_flood`).
-4. **Buffer Driven**: Processing triggered when buffer reaches configured size (`--buffer_size`, default 30) and periodically cleared after large accumulation (1440 rows safeguard).
+| Dependência | Versão Mínima | Finalidade |
+|------------|--------------|-----------|
+| Docker | 20.10+ | Execução do stack RIC e Open5GS |
+| Docker Compose | 1.29+ | Orquestração dos contêineres |
+| GNU Radio | 3.8+ | Simulação de canal RF multi-UE |
+| tmux | 3.0+ | Gerenciamento de sessões paralelas |
+| iperf3 | 3.9+ | Geração de tráfego por perfil |
+| Python | 3.8+ | xApps e scripts de orquestração |
 
----
-## 7. Orchestration Workflow (`run_enhanced.sh`)
-Major phases (with retries/backoff):
-1. Start Near-RT RIC (Docker Compose) → wait for `ric_submgr` health.
-2. Start Open5GS core → wait for health (container healthcheck).
-3. Start gNB (srsRAN) with metrics & extensive pcap logging.
-4. Create UE network namespaces & start 3 srsUE instances (per-UE config from `ue_data.csv`).
-5. Launch GNU Radio fading/channel scenario via per-experiment `run_scenario.sh`.
-6. Start traffic (iperf) per UE according to profiles in `conditions.csv`.
-7. (Optionally) run KPM collector/detector xApps via `python_xapp_runner` container.
-8. Validate metrics duration, cleanup (tmux sessions, namespaces, Docker, ports, temp files).
+### Instalação das Dependências Python
 
-Resilience features:
-- Port freeing + process killing for stale runs.
-- Health & connection polling (E2 + N2 + UE RRC + PDU).
-- Structured retry wrapper (`retry_with_backoff`).
-- Experiment state file for traceability.
-- Duration validation of metrics CSV.
+```bash
+pip install torch numpy pandas scikit-learn joblib
+```
 
 ---
-## 8. Running the Stack
-### 8.1 Prerequisites
-- Linux host with Docker & Docker Compose
-- srsRAN (included) and Open5GS dependencies (handled via containers for core)
-- Python 3.8+ for xApps & tooling
-- iperf3 available inside core container (auto-started servers)
-- Traffic profile shell scripts under `traffic_profiles/`
 
-### 8.2 Start RIC + Run Collector xApp Manually
+## Preocupações com segurança
+
+> ⚠️ Este artefato **simula tráfego de ataque em ambiente controlado**. Utilize exclusivamente em testbeds isolados de rede.
+
+- **Namespaces de rede isolados:** Os UEs (`ue1`, `ue2`, `ue3`) operam em network namespaces Linux separados, sem impacto em interfaces físicas do host.
+- **Portas reservadas:** O orquestrador ocupa as portas `2000–2301` e `55555`. Não execute serviços de produção nestas portas durante os experimentos.
+- **Rotas adicionadas:** A rota `10.45.0.0/16 via 10.53.1.2` é inserida temporariamente e removida no teardown automático.
+- **Processos forçados:** O script mata processos nas portas listadas acima ao iniciar. Evite serviços não relacionados nessas portas.
+- **Dados locais apenas:** O framework não realiza conexões externas à internet; processa apenas dados locais e tráfego sintético gerado internamente.
+- **Artefatos ML locais:** Os modelos `.joblib` são carregados de arquivos locais; nenhum código externo é executado.
+- **Limpeza automática:** Namespaces de rede, sessões tmux e contêineres Docker são removidos automaticamente ao final de cada execução.
+
+---
+
+## Instalação
+
+> **Nota para usuários Windows:** Execute todos os comandos abaixo dentro do WSL2/Ubuntu.
+
+### 1. Clonar o Repositório com Submódulos
+
+```bash
+git clone --recurse-submodules https://github.com/<seu-usuario>/ORCSec.git
+cd ORCSec
+```
+
+Se já clonou sem submódulos:
+
+```bash
+git submodule update --init --recursive
+```
+
+### 2. Criar Ambiente Virtual Python
+
+```bash
+python3 -m venv venv
+source venv/bin/activate   # Linux/macOS/WSL
+```
+
+### 3. Instalar Dependências Python
+
+```bash
+pip install --upgrade pip
+pip install torch numpy pandas scikit-learn joblib
+```
+
+### 4. Instalar Docker e Docker Compose
+
+```bash
+sudo apt update
+sudo apt install -y docker.io docker-compose
+sudo usermod -aG docker $USER
+newgrp docker
+```
+
+### 5. Subir o Stack Near-RT RIC
+
 ```bash
 cd openran/oran-sc-ric
 docker compose up -d
-# Enter runner and launch xApp
-docker compose exec python_xapp_runner bash -c "./kpm5_xapp.py --metrics_dir metrics --ue_ids 0,1,2"
+cd ../..
 ```
 
-### 8.3 Run Detector xApp
-Place model artifacts in the mounted `xApps/python` directory (or provide relative paths). Then:
+Aguarde até que todos os contêineres estejam saudáveis:
+
 ```bash
-docker compose exec python_xapp_runner bash -c "./detector_xapp.py \
-  --s1_model_path s1_model.joblib \
-  --s2_ben_path s2_benign_model.joblib \
-  --s2_mal_path s2_malicious_model.joblib \
-  --buffer_size 60 --ue_ids 0,1,2"
+docker compose -f openran/oran-sc-ric/docker-compose.yml ps
 ```
 
-### 8.4 Generate Experiments
+### 6. Verificar Artefatos dos Modelos ML
+
+Confirme que os arquivos de modelos estão presentes:
+
 ```bash
-python3 generate_experiments.py            # benign runs (50 by default)
-python3 generate_malicious_experiments.py  # malicious-injected runs (100 by default)
+ls openran/oran-sc-ric/xApps/python/*.joblib
+# Esperado: s1_model.joblib  s2_benign_model.joblib  s2_malicious_model.joblib
 ```
 
-### 8.5 Full Automated Run (Malicious Set Example)
-Edit path constants near the top of `run_enhanced.sh` (or parameterize) then:
+---
+
+## Teste mínimo
+
+Execute o seguinte comando para verificar se a instalação foi bem-sucedida:
+
 ```bash
-bash run_enhanced.sh 0 1   # start from training set 0, experiment 1
+python3 -c "
+import torch, numpy, pandas, sklearn, joblib
+print('[OK] PyTorch:', torch.__version__)
+print('[OK] NumPy:', numpy.__version__)
+print('[OK] Pandas:', pandas.__version__)
+print('[OK] scikit-learn:', sklearn.__version__)
+
+import os
+models = ['openran/oran-sc-ric/xApps/python/s1_model.joblib',
+          'openran/oran-sc-ric/xApps/python/s2_benign_model.joblib',
+          'openran/oran-sc-ric/xApps/python/s2_malicious_model.joblib']
+for m in models:
+    status = '[OK]' if os.path.exists(m) else '[AUSENTE]'
+    print(f'{status} Modelo: {m}')
+
+ric_up = os.system('docker compose -f openran/oran-sc-ric/docker-compose.yml ps --quiet 2>/dev/null | wc -l') == 0
+print('[OK] Verificação de dependências concluída.')
+"
+```
+
+**Saída esperada:**
+```
+[OK] PyTorch: 2.x.x
+[OK] NumPy: 1.x.x
+[OK] Pandas: 2.x.x
+[OK] scikit-learn: 1.x.x
+[OK] Modelo: openran/oran-sc-ric/xApps/python/s1_model.joblib
+[OK] Modelo: openran/oran-sc-ric/xApps/python/s2_benign_model.joblib
+[OK] Modelo: openran/oran-sc-ric/xApps/python/s2_malicious_model.joblib
+[OK] Verificação de dependências concluída.
+```
+
+**Tempo esperado:** < 10 segundos
+
+---
+
+## Experimentos
+
+### Experimento 1: Coleta de Métricas KPM Style 5 (xApp Coletor)
+
+Inicia o xApp de coleta de métricas KPM E2SM Style 5:
+
+```bash
+cd openran/oran-sc-ric
+docker compose exec python_xapp_runner bash -c \
+  "./kpm5_xapp.py --metrics_dir metrics --ue_ids 0,1,2"
+```
+
+**Saída esperada:** CSV em `metrics/kpm_style5_metrics.csv` com colunas:
+```
+Timestamp, E2AgentID, SubscriptionID, UE_ID, Granularity,
+RRU.PrbUsedDl, RRU.PrbUsedUl, DRB.UEThpDl, DRB.UEThpUl,
+CQI, RSRP, RSRQ, DRB.RlcSduDelayDl, ...
 ```
 
 ---
-## 9. Data & Metrics Output
-- Collector CSV: `metrics/kpm_style5_metrics.csv` wide form (Timestamp, E2AgentID, SubscriptionID, UE_ID, Granularity, <metrics...>).
-- Detector: In-memory only (unless extended) – could be extended to emit prediction logs.
-- UE logs: `ue_logs/ueX_metrics.csv` (native srsUE metrics if enabled) + pcaps.
-- gNB logs & pcaps: deep protocol tracing for post-hoc analysis.
+
+### Experimento 2: Detecção de UE Malicioso (xApp Detector — Reivindicação Principal)
+
+**Reivindicação:** O detector cascateado classifica corretamente UEs maliciosos com inferência em memória, sem necessidade de CSVs intermediários.
+
+#### Execução:
+
+```bash
+cd openran/oran-sc-ric
+docker compose exec python_xapp_runner bash -c \
+  "./detector_xapp.py \
+    --s1_model_path s1_model.joblib \
+    --s2_ben_path s2_benign_model.joblib \
+    --s2_mal_path s2_malicious_model.joblib \
+    --buffer_size 60 --ue_ids 0,1,2"
+```
+
+#### Configuração:
+- `--buffer_size 60`: janela de 60 amostras por UE antes de inferência
+- `--ue_ids 0,1,2`: IDs dos UEs monitorados
+- Modelos carregados de arquivos `.joblib` locais
+
+#### Recursos esperados:
+- **RAM:** 4 GB
+- **Disco:** < 500 MB
+- **Tempo:** Contínuo (online, até interrupção manual)
+- **GPU:** Opcional
+
+#### Resultado esperado (saída do detector):
+```
+[INFO] Stage 1 - Binary Classification:
+  UE 0 → Benign   (confiança: 0.91)
+  UE 1 → Malicious (confiança: 0.87)
+  UE 2 → Benign   (confiança: 0.95)
+
+[INFO] Stage 2 - Subtype Classification:
+  UE 0 → embb
+  UE 1 → udp_flood
+  UE 2 → urllc
+
+[INFO] Buffer processado: 60 amostras / UE. Próximo ciclo em andamento...
+```
+
+#### Análise dos Resultados:
+- **Classificação binária (Estágio 1):** separa UEs benignos de maliciosos por votação majoritária sobre o buffer
+- **Subtipagem (Estágio 2):** dois modelos especialistas — subtipo benigno (embb, mtc, urllc, voip) e subtipo malicioso (udp_flood, tcp_flood, fragmentação, etc.)
+- **Features derivadas:** razões de utilização PRB, normalização de throughput, métricas de jitter RLC, índice de sinal composto (CQI+RSRP+RSRQ)/3, flags de inatividade, médias/desvios em janelas deslizantes (tamanho=5)
 
 ---
-## 10. Models & Extensibility
-Model artifacts (`*.joblib`) expected to deserialize into either:
-- PyTorch `nn.Module` objects, or
-- sklearn-like estimators exposing `.predict()`.
 
-To add a new feature:
-1. Add computation inside `_feature_engineer_network_data`.
-2. Include it in rolling window list if aggregated temporal stats needed.
-3. Retrain models ensuring `self.selected_features` ordering updated.
+### Experimento 3: Geração de Dataset de Experimentos
 
-To support output logging of predictions, extend `predict_cascaded()` to append to a CSV or push RMR control messages.
+#### 3.1 Experimentos Benignos
 
----
-## 11. Safety & Cleanup Considerations
-- Script force-kills processes on key ports (2000–2301, 55555). Avoid unrelated services on those ports.
-- Network namespaces (`ue1..ue3`) are deleted at cleanup.
-- Route `10.45.0.0/16 via 10.53.1.2` added if missing; removed on teardown.
-- Ensure sufficient system limits for many pcap/log files (disk IO & storage).
+```bash
+python3 generate_experiments.py
+# Gera 50 execuções em dataset/generated_experiments/trX/expY/
+```
 
----
-## 12. Known Limitations / Future Work
-| Area | Improvement |
-|------|-------------|
-| Config Hardcoding | Externalize paths (CSV_FILE, BASE_EXP_DIR) via env/CLI args. |
-| Model Feature Sync | Automate persistence of `selected_features` to avoid mismatch risk. |
-| Detector Persistence | Log per-UE classification timeline to disk for auditing. |
-| Real-time Control | Add RIC control messages when malicious UE detected (e.g., throttle or isolate). |
-| CI Testing | Add unit tests mocking E2 indications & feature pipeline correctness. |
-| Metrics Streaming | Optionally stream engineered features to a time-series DB (e.g., InfluxDB, Prometheus). |
-| Parameter Search | Integrate automated hyperparameter search & model registry. |
-| Visualization | Dashboard for live UE status & feature trends. |
+#### 3.2 Experimentos com Tráfego Malicioso
+
+```bash
+python3 generate_malicious_experiments.py
+# Gera 100 execuções com 2 UEs maliciosos por execução
+```
+
+Cada pasta de experimento gerada contém:
+```
+conditions.csv       # Mapeamento UE ↔ perfil iperf + parâmetros M-map e canal
+run_scenario.sh      # Inicia cenário GNU Radio e salva PID em /tmp/python_scenario.pid
+metrics/             # Métricas de saída (se xApp coletor utilizado)
+ue_logs/             # Logs por UE, CSV de métricas, pcap, rastreamento
+gnb_logs/            # Logs do gNB, rastreamentos pcap
+```
 
 ---
-## 13. Quick Reference (Commands)
-| Action | Command (example) |
-|--------|-------------------|
-| Start RIC | `cd openran/oran-sc-ric && docker compose up -d` |
-| Run KPM xApp | `docker compose exec python_xapp_runner ./kpm5_xapp.py --ue_ids 0,1,2` |
-| Run Detector xApp | `docker compose exec python_xapp_runner ./detector_xapp.py --buffer_size 60` |
-| Generate Benign Experiments | `python3 generate_experiments.py` |
-| Generate Malicious Experiments | `python3 generate_malicious_experiments.py` |
-| Run Automated Pipeline | `bash run_enhanced.sh 0 1` |
+
+### Experimento 4: Pipeline Completo Automatizado
+
+Para reproduzir uma execução completa orquestrada (RIC + core + gNB + UEs + GNU Radio + tráfego + coleta):
+
+```bash
+bash run_enhanced.sh 0 1   # conjunto de treino 0, experimento 1
+```
+
+**Fases executadas automaticamente:**
+1. Inicia Near-RT RIC (Docker Compose) → aguarda saúde de `ric_submgr`
+2. Inicia core Open5GS → aguarda healthcheck do contêiner
+3. Inicia gNB srsRAN com logging de métricas e pcap
+4. Cria namespaces de rede e inicia 3 instâncias srsUE (configs de `ue_data.csv`)
+5. Lança cenário GNU Radio de fading/canal via `run_scenario.sh` do experimento
+6. Inicia tráfego iperf por UE conforme perfis em `conditions.csv`
+7. (Opcional) Executa xApps KPM coletor/detector via contêiner `python_xapp_runner`
+8. Valida duração das métricas, limpa (sessões tmux, namespaces, Docker, portas, temporários)
+
+**Recursos esperados:**
+- **RAM:** 16 GB
+- **Disco:** 5–10 GB por execução completa
+- **Tempo:** ~8–15 minutos por experimento (configurável via `DURATION_SEC`)
+- **Portas utilizadas:** 2000–2301, 55555
 
 ---
-## 14. Citation / Academic Context
-This repository underpins a dissertation project exploring **online RAN telemetry analytics for malicious UE behavior detection** using **multi-stage classification** and **temporal feature extraction** over **E2SM-KPM Style 5 streams** within an **O-RAN Near-RT RIC** testbed.
 
-If publishing, cite O-RAN specifications and srsRAN / Open5GS projects accordingly.
+## LICENSE
 
----
-## 15. Glossary
-- **E2SM-KPM**: E2 Service Model – Key Performance Measurements.
-- **Style 5**: Report style delivering per-UE measurement data in tabular form.
-- **PRB**: Physical Resource Block.
-- **CQI/RSRP/RSRQ**: Standard radio quality indicators.
-- **M-map Generator**: Stochastic sequence generator producing pseudo-random but controllable assignments.
-- **Cascade Model**: Sequential inference pipeline (coarse→fine classification).
+Este projeto está licenciado sob os termos das licenças upstream dos componentes utilizados:
 
----
-## 16. License & Attribution
-See upstream component licenses (O-RAN SC images, srsRAN, Open5GS). Local additions fall under the repository's chosen license (add a `LICENSE` file if not already present for clarity).
+- **O-RAN SC RIC:** Apache License 2.0
+- **srsRAN 4G / srsRAN Project:** GNU Affero General Public License v3.0
+- **Open5GS:** GNU Affero General Public License v3.0
+- **Scripts e xApps locais (`detector_xapp.py`, `kpm5_xapp.py`, `generate_*.py`, etc.):** MIT License
 
----
-## 17. Contact & Contributions
-Open to extensions (pull requests) focusing on: configuration externalization, control-plane reactions, richer model evaluation, or visualization tooling.
+```
+MIT License
 
----
-### ✅ Status
-Core functionality implemented: experiment generation, orchestration, KPM collection, feature engineering, cascaded detection. Ready for iterative refinement & evaluation.
+Copyright (c) 2025 ORCSec Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+```
+
+Consulte os arquivos `openran/srsRAN_4G/LICENSE`, `openran/srsRAN_Project/LICENSE` e `openran/oran-sc-ric/LICENSE` para os termos completos dos componentes de código aberto incluídos como submódulos.
