@@ -120,15 +120,7 @@ add_user_to_docker_group() {
 
     sudo usermod -aG docker "$USER"
     log_ok "Usuário '$USER' adicionado ao grupo 'docker'."
-
-    # Tenta aplicar o grupo na sessão atual sem exigir logout
-    if command -v newgrp &>/dev/null; then
-        log_info "Aplicando grupo na sessão atual via 'newgrp docker'..."
-        # newgrp abre um subshell — exec garante que substitui o processo atual
-        exec newgrp docker
-    else
-        log_warn "'newgrp' não disponível. Faça logout/login para aplicar as permissões."
-    fi
+    log_warn "Faça logout/login (ou execute 'newgrp docker') após o script para aplicar as permissões."
 }
 
 # -----------------------------------------------------------------------------
