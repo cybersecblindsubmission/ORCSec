@@ -303,7 +303,7 @@ main() {
 
     log_section "Iniciando instalação — $(date '+%Y-%m-%d %H:%M:%S')"
 
-    check_root
+    #check_root
     check_ubuntu
     install_docker
     install_system_deps
